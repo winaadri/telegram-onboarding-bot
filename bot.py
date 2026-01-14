@@ -1,4 +1,6 @@
 import os
+import threading
+from http.server import HTTPServer, BaseHTTPRequestHandler
 from telegram import Update
 from telegram.ext import (
     ApplicationBuilder,
@@ -17,7 +19,6 @@ RECOMMENDED_CHANNEL_BASKET = "https://t.me/+GLiqr_Lc0QkxNTAx"
 INSTAGRAM_LINK = "https://www.instagram.com/winaanalista?igsh=MWVicGo1dHEydjVreg=="
 
 # Función para escapar caracteres especiales de MarkdownV2
-# NO escapamos '*' para que la negrita funcione
 def escape_md_v2_keep_bold(text: str) -> str:
     escape_chars = r'\_[]()~`>#+-=|{}.!'
     return ''.join(f'\\{c}' if c in escape_chars else c for c in text)
@@ -61,5 +62,22 @@ def main():
     print("🤖 bienvenido_acceso_bot activo (sin aprobar solicitudes)...")
     app.run_polling()
 
+# ===== Servidor HTTP dummy para Render =====
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"Bot activo!")
+
+def run_dummy_server():
+    port = int(os.getenv("PORT", 10000))
+    server = HTTPServer(("0.0.0.0", port), Handler)
+    print(f"🌐 Dummy web server corriendo en el puerto {port}")
+    server.serve_forever()
+
+# Iniciamos el servidor en un hilo paralelo
+threading.Thread(target=run_dummy_server, daemon=True).start()
+
+# Iniciamos el bot
 if __name__ == "__main__":
     main()
