@@ -1,3 +1,4 @@
+import os
 from telegram import Update
 from telegram.ext import (
     ApplicationBuilder,
@@ -5,8 +6,10 @@ from telegram.ext import (
     ChatJoinRequestHandler
 )
 
-# ⚠️ PEGA AQUÍ TU TOKEN (NO LO COMPARTAS)
-BOT_TOKEN = "8288208060:AAFVRYFL2p-tYQlMgMRfSZ0Vv27v8aAv-3E"
+# ⚠️ Obtenemos el token desde la variable de entorno
+BOT_TOKEN = os.getenv("TELEGRAM_TOKEN")
+if not BOT_TOKEN:
+    raise ValueError("❌ La variable de entorno TELEGRAM_TOKEN no está definida")
 
 # Enlaces
 RECOMMENDED_CHANNEL_TENNIS = "https://t.me/+LbrDbhg_RHpkMmRh"
@@ -41,9 +44,7 @@ async def handle_join_request(update: Update, context: ContextTypes.DEFAULT_TYPE
 
     # 3️⃣ Añadimos Instagram (NO se escapa)
     escaped_message += (
-        "\n📸 *INSTAGRAM:* 👉 [CLICK AQUI]("
-        + INSTAGRAM_LINK +
-        ")\n\n"
+        "\n📸 *INSTAGRAM:* 👉 [CLICK AQUI](" + INSTAGRAM_LINK + ")\n\n"
         "\\(Canales gestionados por expertos en cada deporte\\)"
     )
 
