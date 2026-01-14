@@ -27,8 +27,9 @@ def escape_md_v2_keep_bold(text: str) -> str:
 RAW_WELCOME_MESSAGE = (
     "🚨 *GRACIAS POR TU SOLICITUD PARA SEGUIR A WINA (HAY MUCHAS SOLICITUDES)*\n\n"
     "Mientras tanto, te recomiendo que te unas a los canales de la familia\n\n"
-    "🎾 *WINA TENIS:* 👉 {link_tennis}\n"
-    "🏀 *WINA BASKET:* 👉 {link_basket}\n"
+    #"🎾 *WINA TENIS:*
+    "👉 {link_tennis}\n"
+    #"🏀 *WINA BASKET:* 👉 {link_basket}\n"
 )
 
 async def handle_join_request(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -45,7 +46,7 @@ async def handle_join_request(update: Update, context: ContextTypes.DEFAULT_TYPE
 
     # 3️⃣ Añadimos Instagram (NO se escapa)
     escaped_message += (
-        "\n📸 *INSTAGRAM:* 👉 [CLICK AQUI](" + INSTAGRAM_LINK + ")\n\n"
+        #"\n📸 *INSTAGRAM:* 👉 [CLICK AQUI](" + INSTAGRAM_LINK + ")\n\n"
         "\\(Canales gestionados por expertos en cada deporte\\)"
     )
 
